@@ -1,12 +1,57 @@
 # cmmt
 
-출퇴근 시간을 기록하고 관리하기 위한 스크립트 모음.
+출퇴근, 근무 시간을 기록하고 관리하기 위한 스크립트 모음.
+
+## cli client
+
+구글 시트에 기록된 근무시간을 확인합니다.
+
+[![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
+[![Version](https://img.shields.io/npm/v/cmmt.svg)](https://npmjs.org/package/cmmt)
+[![Downloads/week](https://img.shields.io/npm/dw/cmmt.svg)](https://npmjs.org/package/cmmt)
+[![License](https://img.shields.io/npm/l/cmmt.svg)](https://github.com/chitacan/cmmt/blob/master/package.json)
+
+### development
+
+```
+$ npm install
+$ npm link .
+```
+
+### usage
+
+```
+$ npm install -g cmmt
+$ cmmt --help
+$ cmmt
+Query Sheet... done
+
+Date  Duration (minutes)
+02/17 07:53    473
+02/18 08:28    508
+02/19 07:30    450
+02/20 08:03    483
+02/21 08:15    495
+
+Name           Duration
+total          40:09
+total (+today) 40:09
+left           -00:09
+left  (+today) -00:09
+```
+
+### publish
+
+```
+$ npm version (major|minor|patch)
+$ npm publish
+```
 
 ## Apps Script
 
 [![clasp](https://img.shields.io/badge/built%20with-clasp-4285f4.svg)](https://github.com/google/clasp)
 
-출근과 퇴근 시각을 지정된 구글 시트에 기록합니다. iOS Shortcuts 앱에서 `clasp` 으로 배포된 Apps Script 에 `HTTP GET` 요청을 보내 실행합니다.
+출근과 퇴근 시각을 지정된 [구글 시트에](https://docs.google.com/spreadsheets/d/1Q7LjtAK8NxF2EoLDKjlXVSx3b0UrmIloRKmkRi-dzyg/edit?usp=sharing) 기록합니다. iOS Shortcuts 앱에서 `clasp` 으로 배포된 Apps Script 에 `HTTP GET` 요청을 보내 실행합니다.
 
 ### setup
 

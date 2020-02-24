@@ -1,0 +1,45 @@
+{
+  "name": "cmmt",
+  "description": "personal commute manage client",
+  "version": "0.0.0",
+  "author": "chitacan @chitacan",
+  "bin": {
+    "cmmt": "./bin/run"
+  },
+  "bugs": "https://github.com/chitacan/cmmt/issues",
+  "dependencies": {
+    "@oclif/command": "^1.5.19",
+    "@oclif/config": "^1.14.0",
+    "@oclif/plugin-help": "^2.2.3",
+    "fs-extra": "^8.1.0",
+    "got": "^10.6.0",
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0",
+    "moment-duration-format": "^2.3.2"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1.22.2"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "/bin",
+    "/src"
+  ],
+  "homepage": "https://github.com/chitacan/cmmt",
+  "keywords": [
+    "oclif"
+  ],
+  "license": "MIT",
+  "main": "src/index.js",
+  "oclif": {
+    "bin": "cmmt"
+  },
+  "repository": "chitacan/cmmt",
+  "scripts": {
+    "prepack": "oclif-dev readme",
+    "test": "echo NO TESTS",
+    "version": "oclif-dev readme && git add README.md"
+  }
+}
