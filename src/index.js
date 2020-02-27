@@ -20,7 +20,9 @@ class CmmtCommand extends Command {
   }
 
   getDuration(b, a, offAm = false, offPm = false) {
-    if (b === 0 && a === 0) {
+    if (offAm && offPm) {
+      return M.duration(8, 'hours')
+    } else if (b === 0 && a === 0) {
       return M.duration(0)
     } else if (b !== 0 && a === 0) {
       const before = M(b, 'HH:mm')
@@ -29,8 +31,6 @@ class CmmtCommand extends Command {
       return after >= lunch ?
         M.duration(after.diff(before)).subtract(1, 'hours') :
         M.duration(after.diff(before))
-    } else if (offAm && offPm) {
-      return M.duration(8, 'hours')
     } else if (offAm || offPm) {
       const before = M(b, 'HH:mm')
       const after = M(a, 'HH:mm')
