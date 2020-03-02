@@ -24,16 +24,41 @@ function doGet(e) {
   }
 }
 
-function dateFmts(dates = {}) {
-  const now = new Date()
-  return {
-    slash: Utilities.formatDate(now, "Asia/Seoul", "M/dd"),
-    pad: Utilities.formatDate(now, "Asia/Seoul", "MMdd"),
-    now,
-    ...dates
+function getDayName(num) {
+  switch (+num) {
+    case 1:
+      return '월'
+    case 2:
+      return '화'
+    case 3:
+      return '수'
+    case 4:
+      return '목'
+    case 5:
+      return '금'
+    case 6:
+      return '토'
+    case 7:
+      return '일'
+    default:
+      return ''
   }
 }
 
+function dateFmts(dates = {}) {
+  const now = new Date()
+  const result = {
+    slash: Utilities.formatDate(now, "Asia/Seoul", "M/dd"),
+    pad: Utilities.formatDate(now, "Asia/Seoul", "MMdd"),
+    dayName: getDayName(Utilities.formatDate(now, "Asia/Seoul", "u")),
+    now,
+    ...dates
+  }
+  console.log(`dateFmts: ${result}`)
+  return result
+}
+
+// chunk([1,2,3,4], 2) => [[1,2],[3,4]]
 function chunk(arr, size, cache = []) {
   const tmp = [...arr]
   if (size <= 0) return cache
@@ -65,7 +90,6 @@ function query(action, user_name, _dates) {
   const header = targetSheet.getRange('D2:M2')
     .getValues()
     .flat()
-    .map(d => d === '' ? d : Utilities.formatDate(d, "Asia/Seoul", "MM/dd"))
   const userRow = targetSheet.createTextFinder(user_name).findNext().getRowIndex()
   const targetRange = targetSheet.getRange(userRow, 4, 2, 10)
   const [off, clocks] = targetRange.getValues()
@@ -86,9 +110,7 @@ function query(action, user_name, _dates) {
 }
 
 function main(action, user_name, _dates) {
-  const {now, slash, pad} = dateFmts(_dates)
-
-  console.log(`dateFmts: ${now}, ${slash}, ${pad}`)
+  const {now, slash, pad, dayName} = dateFmts(_dates)
 
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const targetSheetName = ss.getSheets()
@@ -111,7 +133,7 @@ function main(action, user_name, _dates) {
   const header = targetSheet.getRange('D2:L2')
   const colIndex = header.getValues()
     .flat()
-    .findIndex(date => date !== '' ? Utilities.formatDate(date, "Asia/Seoul", "MMdd") === pad : false)
+    .findIndex(date => date !== '' ? date ===  dayName : false)
 
   const todayCol = header.offset(0, colIndex).getColumn()
   const userRow = targetSheet.createTextFinder(user_name).findNext().getRowIndex()
