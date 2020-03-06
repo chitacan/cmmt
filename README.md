@@ -67,6 +67,7 @@ $ clasp create --rootDir scripts --parentId <DRIVE_ID>
 ```
 $ clasp push
 $ clasp run 'main' -p '["CLOCK_IN", "김경열", {"pad": "0211"}]'
+$ clasp run 'query' -p '["김경열"]'
 $ clasp logs --watch
 ```
 

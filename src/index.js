@@ -95,16 +95,21 @@ class CmmtCommand extends Command {
     cli.action.start('Query Sheet')
     const {status, result, message} = await this.get(url, 'QUERY', name, date)
     cli.action.stop()
+    if (flags.raw) {
+      this.log(result)
+      this.exit(0)
+    }
     if (status === 'ok') {
-      const worked = this.workDuration(result)
-      const total = this.totalDuration(result, false)
-      const totalWithToday = this.totalDuration(result, true)
+      const {data, epoch} = result
+      const worked = this.workDuration(data)
+      const total = this.totalDuration(data, false)
+      const totalWithToday = this.totalDuration(data, true)
       const left = M.duration(40, 'hours').subtract(total)
       const leftWithToday = M.duration(40, 'hours').subtract(totalWithToday)
 
       this.log('')
       cli.table(worked, {
-        date: {},
+        dayName: {},
         duration: {},
         mins: {
           header: '(minutes)'
@@ -144,8 +149,9 @@ CmmtCommand.description = `Get commute data from google sheet.
 CmmtCommand.flags = {
   version: flags.version({char: 'v'}),
   help: flags.help({char: 'h'}),
-  name: flags.string({char: 'n', description: 'name to query'}),
+  name: flags.string({char: 'n', description: 'user name to query'}),
   date: flags.string({char: 'd', description: 'date to query'}),
+  raw: flags.boolean({char: 'r', description: 'print raw result'})
 }
 
 module.exports = CmmtCommand

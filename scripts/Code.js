@@ -11,7 +11,7 @@ function doGet(e) {
     const _dates = JSON.parse(dates)
     switch (action) {
       case "QUERY":
-        result = query(action, user_name, _dates)
+        result = query(user_name, _dates)
         break;
       default:
         result = main(action, user_name, _dates)
@@ -66,8 +66,8 @@ function chunk(arr, size, cache = []) {
   return cache
 }
 
-function query(action, user_name, _dates) {
-  const {pad} = dateFmts(_dates)
+function query(user_name, _dates) {
+  const {now, pad} = dateFmts(_dates)
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const targetSheetName = ss.getSheets()
     .map(s => s.getName())
@@ -101,12 +101,12 @@ function query(action, user_name, _dates) {
       return d === '' ? 0 : Utilities.formatDate(d, "Asia/Seoul", "HH:mm")
     }), 2)
   }
-  const result = chunks.header.map(([date, _], i) => {
+  const data = chunks.header.map(([dayName, _], i) => {
     const off = chunks.off[i]
     const clocks = chunks.clocks[i]
-    return {date, off, clocks}
+    return {dayName, off, clocks}
   })
-  return {status: 'ok', result}
+  return {status: 'ok', result: {epoch: Math.floor(now / 1000), data}}
 }
 
 function main(action, user_name, _dates) {
