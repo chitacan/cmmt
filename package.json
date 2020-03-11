@@ -1,7 +1,7 @@
 {
   "name": "cmmt",
   "description": "personal commute manage client",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "chitacan @chitacan",
   "bin": {
     "cmmt": "./bin/run"
